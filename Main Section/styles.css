@@ -1,0 +1,207 @@
+:root {
+    --primary: #7c3aed;
+    --dark: #0f172a;
+    --dark-light: #1e293b;
+    --light: #f8fafc;
+    --success: #22c55e;
+    --danger: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--light);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--dark-light);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: #334155;
+    color: var(--light);
+}
+
+button {
+    background: var(--primary);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.expense-list {
+    list-style: none;
+}
+
+.expense-item {
+    background: #334155;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chart-container {
+    height: 400px;
+    position: relative;
+}
+
+.total-expense {
+    margin-top: 1rem;
+    background: #334155;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: var(--light);
+    text-align: center;
+}
+
+.total-expense h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.total-expense p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.month-button {
+    background: var(--dark-light);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    display: inline-block;
+    color: var(--light);
+}
+
+/* Sidebar Styles */
+#sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background: var(--dark-light);
+    padding: 1.5rem;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar.open {
+    right: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    color: var(--light);
+}
+
+.close-btn {
+    background: var(--danger);
+    color: var(--light);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    margin-top: auto;
+}
+
+.sidebar-content {
+    margin-top: 1rem;
+}
+
+.sidebar-month-button {
+    background: var(--dark-light);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    color: var(--light);
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: left;
+}
+
+.search-bar {
+    width: 200px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: #334155;
+    color: var(--light);
+    border: none;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--light);
+    flex: 1;
+    padding-left: 0.5rem;
+}
+
+.search-bar button {
+    background: transparent;
+    border: none;
+    color: var(--light);
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+.hidden {
+    display: none;
+}

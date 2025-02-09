@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Auth</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('Screenshot%202025-02-05%20223026.png');
+            background-size: cover;
+            background-position: center;
+            filter: blur(5px); 
+            z-index: -1; 
+        }
+
+        .container {
+            position: relative;
+            width: 380px;
+            padding: 40px 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 119, 255, 0.1);
+            overflow: hidden;
+            z-index: 1; /* Keeps the form in front */
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tab {
+            color: #f7f7fd;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            background: #0077ff;
+            box-shadow: 0 0 15px rgba(0, 119, 255, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1em;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0077ff;
+            box-shadow: 0 0 15px rgba(0, 119, 255, 0.3);
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+            transition: 0.3s;
+            font-size: 0.9em;
+        }
+
+        .form-group input:focus ~ label,
+        .form-group input:valid ~ label {
+            top: -10px;
+            left: 10px;
+            font-size: 0.7em;
+            color: #0077ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #0077ff, #0044ff);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .switch-form {
+            text-align: center;
+            color: #fff;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .switch-form a {
+            color: #0077ff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .switch-form a:hover {
+            text-shadow: 0 0 10px rgba(0, 119, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="background"></div>
+    
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="switchForm('login')">ACCESS</div>
+            <div class="tab" onclick="switchForm('signup')">REGISTER</div>
+        </div>
+
+        <form id="loginForm" class="form">
+            <div class="form-group">
+                <input type="text" required>
+                <label>User Name</label>
+            </div>
+            <div class="form-group">
+                <input type="password" required>
+                <label>PASSPHRASE</label>
+            </div>
+            <button type="submit">AUTHENTICATE</button>
+        </form>
+
+        <form id="signupForm" class="form hidden">
+            <div class="form-group">
+                <input type="text" required>
+                <label>User Name</label>
+            </div>
+            <div class="form-group">
+                <input type="email" required>
+                <label>E-Mail</label>
+            </div>
+            <div class="form-group">
+                <input type="password" required>
+                <label>PASSPHRASE</label>
+            </div>
+            <button type="submit">INITIALIZE</button>
+        </form>
+
+        <div class="switch-form">
+            <span id="switchText">NEW OPERATIVE? </span>
+            <a id="switchLink" onclick="switchForm('signup')">REQUEST ACCESS</a>
+        </div>
+    </div>
+
+    <script>
+        function switchForm(formType) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const tabs = document.querySelectorAll('.tab');
+            const switchText = document.getElementById('switchText');
+            const switchLink = document.getElementById('switchLink');
+
+            if (formType === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
+                switchText.textContent = 'NEW OPERATIVE? ';
+                switchLink.textContent = 'REQUEST ACCESS';
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                tabs[0].classList.remove('active');
+                tabs[1].classList.add('active');
+                switchText.textContent = 'EXISTING OPERATIVE? ';
+                switchLink.textContent = 'AUTHENTICATE';
+            }
+        }
+
+        document.querySelectorAll('.form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('ACCESS GRANTED');
+               
+                window.location.href = '../Main%20Section/index.html'; 
+            });
+        });
+    </script>
+</body>
+</html>
